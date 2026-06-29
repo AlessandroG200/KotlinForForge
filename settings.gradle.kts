@@ -8,9 +8,9 @@ pluginManagement {
         id ("org.gradle.toolchains.foojay-resolver-convention") version ("0.5.0")
     }
 }
-include("forge", "neoforge", "combined")
+include("forge", "combined")
 include("forge:kfflang",    "forge:kfflib",    "forge:kffmod"   )
-include("neoforge:kfflang", "neoforge:kfflib", "neoforge:kffmod")
+//include("neoforge:kfflang", "neoforge:kfflib", "neoforge:kffmod")
 include("combined:kfflang", "combined:kfflib", "combined:kffmod")
 
 rootProject.name = "KotlinForForge"

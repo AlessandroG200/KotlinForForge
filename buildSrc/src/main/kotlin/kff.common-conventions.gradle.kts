@@ -13,7 +13,7 @@ val jvmTarget = JvmTarget.JVM_17
 project.extensions.getByType<JavaPluginExtension>().toolchain.languageVersion.set(JavaLanguageVersion.of(jvmTarget.target))
 
 project.version = getPropertyString("kff_version")
-project.group = "thedarkcolour"
+project.group = "dev.alessandro"
 
 val replacements: MutableMap<String, Any> = mutableMapOf(
     "min_mc_version" to getPropertyString("min_mc_version"),

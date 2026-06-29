@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 project.plugins.apply(JavaPlugin::class)
 
 project.version = getPropertyString("kff_version")
-project.group = "thedarkcolour"
+project.group = "dev.alessandro"
 
 project.tasks.withType<Jar> {
     // get rid of duplicate files in the ZIP
