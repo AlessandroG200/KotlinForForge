@@ -107,6 +107,16 @@ setOf(sourceSets.main, sourceSets.test)
     }
 
 publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/AlessandroG200/KotlinForForge")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
     publications {
         register<MavenPublication>("maven") {
             from(components["java"])

@@ -142,3 +142,10 @@ tasks.create("publishAllMavens") {
     dependsOn(":forge:kfflang:publishToMavenLocal")
     dependsOn(":forge:kffmod:publishToMavenLocal")
 }
+
+tasks.create("publishAllMavensGITHUB") {
+    dependsOn(":forge:publish")
+    dependsOn(":forge:kfflib:publish")
+    dependsOn(":forge:kfflang:publish")
+    dependsOn(":forge:kffmod:publish")
+}
