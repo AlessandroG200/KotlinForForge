@@ -321,7 +321,7 @@ publishing {
 
                 // Generate Maven dependencies manually
                 val dependencies = arrayListOf("kfflang", "kfflib", "kffmod")
-                    .map { FakeMavenDependency("thedarkcolour", it + suffix, project.property("kff_version") as String) }
+                    .map { FakeMavenDependency("dev.alessandro", it + suffix, project.property("kff_version") as String) }
                     .plus(libs.bundles.kotlin.get()
                         .map { FakeMavenDependency(it.group!!, it.name, it.version!!) }
                     )
