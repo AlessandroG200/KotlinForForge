@@ -9,6 +9,15 @@ import org.jetbrains.gradle.ext.taskTriggers
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+/*
+    The main build script.
+
+    Modifications by AlessandroG200:
+
+    - Publish to GitHub Packages, under the "dev.alessandro" group as to not conflict with upstream.
+    - Disable publishing to modrinth and curseforge
+ */
+
 plugins {
     `java-library`
     `maven-publish`
@@ -18,8 +27,6 @@ plugins {
     alias(libs.plugins.shadow).apply(false)
     alias(libs.plugins.moddev).apply(false)
     alias(libs.plugins.kotlin)
-
-    alias(libs.plugins.mod.publish.plugin)
 }
 
 //
@@ -53,7 +60,7 @@ idea.module {
 
 base.archivesName.set("kotlinforforge")
 version = project.property("kff_version")!!
-group = "thedarkcolour"
+group = "dev.alessandro"
 
 val generateModMetadata = tasks.register<ProcessResources>("generateModMetadata") {
     val replacements = mapOf(
@@ -331,7 +338,14 @@ publishing {
     }
 
     repositories {
-        maven("file://${project.projectDir}/site")
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/AlessandroG200/KotlinForForge")
+            credentials { // gpr.user to publish myself, GITHUB_ACTOR to publish on Actions
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
         mavenLocal()
     }
 }
@@ -345,56 +359,4 @@ data class FakeMavenDependency(private val groupId: String, private val artifact
     override fun getScope() = "compile"
     override fun getExcludeRules() = emptySet<ExcludeRule>()
     override fun isOptional() = false
-}
-
-//
-// MOD PLATFORMS
-//
-val supportedMcVersions = listOf("1.20.6", "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4", "1.21.5", "1.21.6", "1.21.7", "1.21.8")
-
-publishMods {
-    file = tasks.jar.get().archiveFile
-
-    changelog = getChangelogText()
-    type = STABLE
-    modLoaders.addAll("forge", "neoforge")
-    displayName = "Kotlin for Forge ${project.version}"
-
-    curseforge {
-        projectId = "351264"
-        projectSlug = "kotlin-for-forge"
-        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
-        minecraftVersions.addAll(supportedMcVersions)
-    }
-    modrinth {
-        projectId = "ordsPcFz"
-        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
-        minecraftVersions.addAll(supportedMcVersions)
-    }
-}
-
-fun getChangelogText(): String {
-    val version = project.property("kff_version").toString()
-
-    val file = File("changelog.md")
-    if (!file.exists()) {
-        return "Changelog not found"
-    }
-
-    // Relies on the changelog block being "##blahblahblah_VERSION" where _ is a space
-    val content = file.readText().normaliseLineSeparators().split("##.* ")
-
-    for (chunk in content) {
-        if (chunk.isEmpty()) continue
-
-        val lineTerminatorIndex = chunk.indexOfFirst { c -> c == '\n' || c == '\r' }
-        val versionString = chunk.substring(0, lineTerminatorIndex)
-
-        if (versionString == version) {
-            return "## Kotlin for Forge $version\n${chunk.substring(lineTerminatorIndex + 1)}"
-        }
-    }
-
-    // Fallback in case changelog was not provided
-    return "Kotlin for Forge $version"
 }

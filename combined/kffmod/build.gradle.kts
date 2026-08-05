@@ -4,7 +4,7 @@ plugins {
 
 base.archivesName.set("kffmod")
 version = project.property("kff_version") as String
-group = "thedarkcolour"
+group = "dev.alessandro"
 
 tasks.jar.configure {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
