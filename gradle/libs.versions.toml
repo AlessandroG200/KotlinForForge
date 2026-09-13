@@ -1,12 +1,8 @@
 [versions]
-kotlin = "2.4.10"
+kotlin = "2.4.20"
 coroutines = "1.11.0"
 serialization = "1.11.0"
-neogradle = "7.0.138"
-neoforge = "20.4.22-beta"
-forgegradle = "6.0.25"
-minotaur = "2.8.7"
-cursegradle = "1.4.0"
+forgegradle = "6.0.54"
 
 # https://github.com/JetBrains/kotlin
 # https://github.com/Kotlin/kotlinx.coroutines
@@ -21,11 +17,7 @@ kotlinx-coroutines-core-jvm = { module = "org.jetbrains.kotlinx:kotlinx-coroutin
 kotlinx-coroutines-jdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.ref = "coroutines" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
-neoforge = { module = "net.neoforged:neoforge", version.ref = "neoforge" }
 
 [plugins]
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-neogradle = { id = "net.neoforged.gradle.userdev", version.ref = "neogradle" }
 forgegradle = { id = "net.minecraftforge.gradle", version.ref = "forgegradle" }
-minotaur = { id = "com.modrinth.minotaur", version.ref = "minotaur" }
-cursegradle = { id = "com.matthewprenger.cursegradle", version.ref = "cursegradle" }

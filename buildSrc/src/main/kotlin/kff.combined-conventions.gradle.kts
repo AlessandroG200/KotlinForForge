@@ -15,7 +15,6 @@ project.tasks.withType<Jar> {
     from(provider {
         listOf(
             zipTree(project(":forge:$subproject").tasks.getByName("jar", Jar::class).archiveFile),
-            zipTree(project(":neoforge:$subproject").tasks.getByName("jar", Jar::class).archiveFile),
         )
     })
 

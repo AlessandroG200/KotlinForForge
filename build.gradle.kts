@@ -1,12 +1,10 @@
 plugins {
     id("kff.common-conventions")
-    alias(libs.plugins.neogradle) apply false
 }
 
 // maven.repo.local is set within the Julia script in the website branch
 tasks.create("publishAllMavens") {
     dependsOn(":forge:publishAllMavens")
-    dependsOn(":neoforge:publishAllMavens")
 }
 
 task<Exec>("testREADME") {

@@ -8,6 +8,8 @@ plugins {
     id("kff.forge-conventions")
 }
 
+base.archivesName.set("kotlinforforge-forge")
+
 val shadow: Configuration by configurations.creating {
     exclude("org.jetbrains", "annotations")
 }
